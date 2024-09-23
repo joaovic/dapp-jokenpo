@@ -1,0 +1,24 @@
+{
+  "name": "jokenpo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx hardhat node",
+    "test": "npx hardhat test",
+    "compile": "npx hardhat compile",
+    "deploy:local": "npx hardhat ignition deploy ignition/modules/JoKenPo.ts --network local",
+    "deploy:bsctest": "npx hardhat ignition deploy ignition/modules/JoKenPo.ts --network bsctest"
+  },
+  "keywords": [],
+  "author": "João Vicente",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomiclabs/hardhat-etherscan": "^3.1.8",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.10"
+  },
+  "dependencies": {
+  }
+}
