@@ -23,6 +23,10 @@ contract JoKenPoAdapter {
         _;
     }
     
+    function getImplementationAddress() external view returns (address) {
+        return address(joKenPo);
+    }
+
     function upgrade(address newImplementation) external restricted {
         require(newImplementation != address(0), "Empty address is not permitted");
 
