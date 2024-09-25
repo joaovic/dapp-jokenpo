@@ -7,17 +7,29 @@ type LoginResult = {
     isAdmin: boolean;
 }
 
-export async function doLogin() : Promise<LoginResult> {
-    if (!window.ethereum)
-        throw new Error('No MetaMask found.');
+const ADAPTER_ADDRESS = `${process.env.REACT_APP_CONTRACT_ADDRESS}`;
 
-    const web3 = new Web3(window.ethereum);
+function getWeb3(): Web3 {
+    if (!window.ethereum) throw new Error('No MetaMask found.');
+    return new Web3(window.ethereum);
+}
+
+function getContract(web3?: Web3) {
+    if (!web3) web3 = getWeb3();
+    return new web3.eth.Contract(
+        ABI as AbiItem[], 
+        ADAPTER_ADDRESS,
+        {from: localStorage.getItem("account") || undefined});
+}
+
+export async function doLogin(): Promise<LoginResult> {
+    const web3 = getWeb3();
     const accounts = await web3.eth.requestAccounts();
 
     if (!accounts || !accounts.length)
         throw new Error('Wallet not found/allowed.');
 
-    const contract = new web3.eth.Contract(ABI as AbiItem[], process.env.REACT_APP_CONTRACT_ADDRESS, {from: accounts[0]});
+    const contract = getContract(web3);
     const ownerAddressRaw = await contract.methods.owner().call();
     const ownerAddress = String(ownerAddressRaw).toLowerCase();
     const isAdmin = accounts[0] === ownerAddress;
