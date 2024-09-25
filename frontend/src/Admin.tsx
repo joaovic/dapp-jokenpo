@@ -1,11 +1,11 @@
 import React from 'react';
 
-function App() {
+function Admin() {
   return (
     <div>
-      App Page
+      Admin Page
     </div>
   );
 }
 
-export default App;
+export default Admin;

@@ -1,16 +1,29 @@
 import { doLogin } from "./Web3Service";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [message, setMessage] = useState("");
   const [msgColor, setMsgColor] = useState("");
-
   const messageStyle = { color: msgColor };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("account") !== null)
+        redirectAfterLogin(localStorage.getItem("isAdmin") === "true");
+  });
+
+  function redirectAfterLogin(isAdmin: boolean) {
+    if (isAdmin)
+      navigate("/admin");
+    else
+      navigate("/app");
+  }
 
   function onBtnClicked() {
     setMessage("Logging in...");
     doLogin()
-        .then(result => alert(JSON.stringify(result)))
+        .then(result => redirectAfterLogin(result.isAdmin))
         .catch(err => { setMsgColor("red"); setMessage(err); });
   }
 
