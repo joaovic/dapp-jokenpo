@@ -1,9 +1,13 @@
 import React from 'react';
+import Header from './Header';
 
 function Admin() {
   return (
-    <div>
-      Admin Page
+    <div className='container'>
+      <Header/>
+      <main>
+        Admin Page
+      </main>
     </div>
   );
 }

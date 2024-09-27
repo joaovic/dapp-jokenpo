@@ -43,3 +43,8 @@ export async function doLogin(): Promise<LoginResult> {
     } as LoginResult;
 
 }
+
+export function doLogout() {
+    localStorage.removeItem("account");
+    localStorage.removeItem("isAdmin");
+}
